@@ -1,0 +1,2 @@
+# ssniper
+Minimal screenshot utility
