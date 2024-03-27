@@ -3,7 +3,8 @@
 if [ "$#" -eq 0 ]; then
     DATE=$(date +"%Y-%m-%d_%H%M%S")
     FILE="$HOME/Pictures/screenshots/$DATE.png"
-    shotgun $FILE
+    RES=$(xrandr | awk 'NR==1 {print $8 "x" substr($10, 1, length($10)-1)}')
+    ffmpeg -f x11grab -video_size $RES -i :0.0+0,0 -vframes 1 $FILE
     echo "Screenshot saved to $FILE"
     exit 1
 fi
@@ -31,7 +32,7 @@ while [[ $# -gt 0 ]]; do
             # Full screen to clipboard
             DATE=$(date +"%Y-%m-%d_%H%M%S")
             FILE="$HOME/.cache/$DATE.png"
-            shotgun $FILE
+            ffmpeg -f x11grab -video_size $RES -i :0.0+0,0 -vframes 1 $FILE
             xclip -selection clipboard -t image/png -i $FILE
             rm $FILE
             echo "Screenshot saved to clipboard"
@@ -41,7 +42,7 @@ while [[ $# -gt 0 ]]; do
             # Selection to clipboard
             DATE=$(date +"%Y-%m-%d_%H%M%S")
             FILE="$HOME/.cache/$DATE.png"
-            shotgun -g $(hacksaw) $FILE
+            ffmpeg -f x11grab -video_size $(hacksaw -f '%wx%h -i :0.0+%x,%y') -vframes 1 $FILE
             xclip -selection clipboard -t image/png -i $FILE
             rm $FILE
             echo "Screenshot saved to clipboard"
