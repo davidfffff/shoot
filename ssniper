@@ -31,7 +31,7 @@ while [[ $# -gt 0 ]]; do
         -c)
             # Full screen to clipboard
             DATE=$(date +"%Y-%m-%d_%H%M%S")
-            FILE="$HOME/.cache/$DATE.png"
+            FILE="/tmp/$DATE.png"
             RES=$(xrandr --current | grep '*' | awk '{print $1}')
             ffmpeg -f x11grab -video_size $RES -i :0.0+0,0 -vframes 1 $FILE
             xclip -selection clipboard -t image/png -i $FILE
@@ -42,7 +42,7 @@ while [[ $# -gt 0 ]]; do
         -sc)
             # Selection to clipboard
             DATE=$(date +"%Y-%m-%d_%H%M%S")
-            FILE="$HOME/.cache/$DATE.png"
+            FILE="/tmp/$DATE.png"
             ffmpeg -f x11grab -video_size $(hacksaw -f '%wx%h -i :0.0+%x,%y') -vframes 1 $FILE
             xclip -selection clipboard -t image/png -i $FILE
             rm $FILE
