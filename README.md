@@ -1,2 +1,2 @@
-# ssniper
-Minimal screenshot utility
+# Shoot
+A silly little screenshot utility

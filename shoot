@@ -24,7 +24,7 @@ while [[ $# -gt 0 ]]; do
             # Selection
             DATE=$(date +"%Y-%m-%d_%H%M%S")
             FILE="/$HOME/Pictures/screenshots/$DATE.png"
-            shotgun -g $(hacksaw) $FILE
+            ffmpeg -f x11grab -video_size $(hacksaw -f '%wx%h -i :0.0+%x,%y') -vframes 1 $FILE
             echo "Screenshot saved to $FILE"
             exit 1
             ;;
